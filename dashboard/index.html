@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Lifetime Exotics — Ops Dashboard</title>
+<style>
+:root{--bg:#07090d;--panel:#10141b;--panel2:#151b24;--text:#f6f7f9;--muted:#9da7b5;--red:#ff2a2a;--green:#31d17c;--yellow:#ffc857;--line:#252d38}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:radial-gradient(circle at top right,#241012 0,#090b10 28%,#07090d 70%);color:var(--text)}
+a{color:inherit}.wrap{max-width:1180px;margin:auto;padding:28px}.hero{padding:28px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(255,42,42,.13),rgba(255,255,255,.025));border-radius:24px;box-shadow:0 24px 70px rgba(0,0,0,.35)}
+.kicker{letter-spacing:.18em;text-transform:uppercase;font-size:12px;color:var(--red);font-weight:800}.hero h1{font-size:clamp(34px,6vw,72px);margin:8px 0 8px;line-height:.95}.hero p{color:var(--muted);max-width:760px;font-size:17px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-top:18px}.card{grid-column:span 4;background:rgba(16,20,27,.92);border:1px solid var(--line);border-radius:18px;padding:20px}.wide{grid-column:span 8}.full{grid-column:1/-1}.stat{font-size:34px;font-weight:850}.label{color:var(--muted);font-size:13px}.bar{height:10px;background:#202731;border-radius:999px;overflow:hidden;margin-top:12px}.bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--red),#ff6b6b);width:45%}.status{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}.status:last-child{border-bottom:0}.pill{font-size:12px;font-weight:800;padding:5px 9px;border-radius:999px}.done{background:rgba(49,209,124,.14);color:var(--green)}.prog{background:rgba(255,200,87,.14);color:var(--yellow)}.need{background:rgba(255,42,42,.14);color:#ff7373}
+input{width:100%;background:#0a0d12;color:white;border:1px solid var(--line);border-radius:10px;padding:11px;margin:5px 0 10px}.calc{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.result{font-size:28px;font-weight:850;margin-top:8px}.links a{display:inline-block;text-decoration:none;border:1px solid var(--line);background:var(--panel2);padding:10px 12px;border-radius:10px;margin:5px 6px 5px 0}.footer{color:var(--muted);text-align:center;padding:30px 10px 10px;font-size:12px}
+@media(max-width:800px){.card,.wide{grid-column:1/-1}.calc{grid-template-columns:1fr}.wrap{padding:14px}.hero{padding:20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section class="hero">
+<div class="kicker">Lifetime Exotics LLC</div>
+<h1>OPERATIONS HQ</h1>
+<p>Dealer-launch command center. Licensing, facility readiness, financing, inventory economics, and day-to-day execution in one place.</p>
+<div class="bar"><i></i></div>
+<div class="label" style="margin-top:8px">Launch progress — update manually as tasks close</div>
+</section>
+
+<section class="grid">
+<div class="card"><div class="label">Dealer launch</div><div class="stat">IN BUILD</div><div class="label">Nashville, Tennessee</div></div>
+<div class="card"><div class="label">Top mission</div><div class="stat">LICENSE</div><div class="label">Finish documents + facility + inspection</div></div>
+<div class="card"><div class="label">Floorplan</div><div class="stat">SHOPPING</div><div class="label">New-dealer friendly options</div></div>
+
+<div class="card wide">
+<h2>Launch board</h2>
+<div class="status"><span>LLC / EIN</span><span class="pill done">DONE</span></div>
+<div class="status"><span>Zoning letter</span><span class="pill done">DONE</span></div>
+<div class="status"><span>Business tax license</span><span class="pill done">DONE</span></div>
+<div class="status"><span>Sales & Use Tax registration</span><span class="pill prog">CHECK</span></div>
+<div class="status"><span>$50,000 dealer bond</span><span class="pill prog">IN PROGRESS</span></div>
+<div class="status"><span>Garage liability / Any Auto</span><span class="pill prog">IN PROGRESS</span></div>
+<div class="status"><span>CPA compiled financial statement</span><span class="pill prog">IN PROGRESS</span></div>
+<div class="status"><span>Ownership Worksheet</span><span class="pill need">NEEDED</span></div>
+<div class="status"><span>Garage Service Agreement</span><span class="pill need">NEEDED</span></div>
+<div class="status"><span>Permanent sign + photos</span><span class="pill prog">IN PROGRESS</span></div>
+<div class="status"><span>CORE application + inspection</span><span class="pill need">LATER</span></div>
+</div>
+
+<div class="card">
+<h2>Buy calculator</h2>
+<div class="calc">
+<label>Expected retail<input id="retail" type="number" value="20000"></label>
+<label>Target gross<input id="gross" type="number" value="3000"></label>
+<label>Fees + transport<input id="fees" type="number" value="1000"></label>
+<label>Recon<input id="recon" type="number" value="1000"></label>
+</div>
+<div class="label">Maximum buy</div><div id="maxbuy" class="result">$15,000</div>
+</div>
+
+<div class="card full links">
+<h2>Quick links inside the repo</h2>
+<a href="../docs/command-center.md">Command Center</a>
+<a href="../docs/dealer-license-checklist.md">Dealer License</a>
+<a href="../docs/facility-readiness.md">Facility</a>
+<a href="../docs/floorplan-tracker.md">Floorplans</a>
+<a href="../docs/vehicle-acquisition-checklist.md">Buying</a>
+<a href="../docs/recon-checklist.md">Recon</a>
+<a href="../docs/deal-jacket-checklist.md">Deal Jacket</a>
+<a href="../docs/profit-calculator.md">Profit Guide</a>
+<a href="../docs/daily-ops.md">Daily Ops</a>
+<a href="../docs/vendor-directory.md">Vendors</a>
+</div>
+</section>
+<div class="footer">LIFETIME EXOTICS · PRIVATE OPERATIONS DASHBOARD · Do not store customer sensitive information in this repo.</div>
+</div>
+<script>
+const ids=['retail','gross','fees','recon'];function calc(){const v=id=>Number(document.getElementById(id).value||0);const x=v('retail')-v('gross')-v('fees')-v('recon');document.getElementById('maxbuy').textContent=x.toLocaleString('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});}ids.forEach(id=>document.getElementById(id).addEventListener('input',calc));calc();
+</script>
+</body>
+</html>
