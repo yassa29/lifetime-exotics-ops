@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifetime Exotics — Operations HQ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #111827;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: #4b5563;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: #6b7280;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            background: #f3f4f6;
+            color: #4b5563;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #e5e7eb;
+        }
+
+        button.active {
+            background: #1e40af;
+            color: white;
+        }
+
+        main {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        section {
+            display: none;
+        }
+
+        section.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #1e40af;
+            margin-bottom: 20px;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: #f9fafb;
+            border-left: 4px solid #d1d5db;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .status-item:hover {
+            background: #f3f4f6;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .status-label {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .status-badge.complete {
+            background: #d1fae5;
+            color: #10b981;
+            border-left-color: #10b981;
+        }
+
+        .status-badge.in-progress {
+            background: #fef3c7;
+            color: #b45309;
+            border-left-color: #f59e0b;
+        }
+
+        .status-badge.pending {
+            background: #fee2e2;
+            color: #ef4444;
+            border-left-color: #ef4444;
+        }
+
+        .progress-container {
+            background: #f9fafb;
+            padding: 24px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 24px;
+            background: #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1e40af 0%, #3b82f6 100%);
+            width: 20%;
+            transition: width 0.4s ease;
+        }
+
+        .mission-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .mission-item {
+            display: flex;
+            gap: 20px;
+            padding: 24px;
+            background: #f9fafb;
+            border-radius: 8px;
+            border-left: 4px solid #1e40af;
+            transition: all 0.3s ease;
+        }
+
+        .mission-item:hover {
+            background: #f3f4f6;
+            transform: translateX(4px);
+        }
+
+        .mission-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e40af;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .mission-content h4 {
+            font-size: 1.1rem;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .mission-content p {
+            color: #4b5563;
+            margin-bottom: 10px;
+        }
+
+        .priority-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .priority-badge.high {
+            background: #fee2e2;
+            color: #ef4444;
+        }
+
+        .operations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .ops-category {
+            padding: 24px;
+            background: #f9fafb;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .ops-category:hover {
+            background: #f3f4f6;
+            transform: translateY(-4px);
+        }
+
+        .ops-category h3 {
+            font-size: 1.2rem;
+            color: #1e40af;
+            margin-bottom: 18px;
+        }
+
+        .ops-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .ops-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: white;
+            color: #4b5563;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+
+        .ops-link:hover {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+            transform: translateX(4px);
+        }
+
+        .ops-icon {
+            font-size: 1.3rem;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            main { padding: 24px; }
+            .status-grid { grid-template-columns: 1fr; }
+            nav { flex-direction: column; }
+            button { width: 100%; }
+            .mission-item { flex-direction: column; }
+            .operations-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏁 LIFETIME EXOTICS</h1>
+            <p class="tagline">Operations Command Center</p>
+            <p class="subtitle">Nashville, Tennessee · Independent Auto Sales</p>
+        </header>
+
+        <nav>
+            <button class="nav-btn active" data-section="status">Opening Status</button>
+            <button class="nav-btn" data-section="mission">Current Mission</button>
+            <button class="nav-btn" data-section="operations">Operations Map</button>
+        </nav>
+
+        <main>
+            <!-- Status Section -->
+            <section id="status" class="active">
+                <h2>🚦 Opening Status</h2>
+                
+                <div class="status-grid">
+                    <div class="status-item">
+                        <span class="status-label">LLC / EIN</span>
+                        <span class="status-badge complete">✅ Complete</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Zoning</span>
+                        <span class="status-badge complete">✅ Complete</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Business Tax License</span>
+                        <span class="status-badge complete">✅ Complete</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Sales & Use Tax Registration</span>
+                        <span class="status-badge in-progress">🟡 In Progress</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">$50,000 Dealer Bond</span>
+                        <span class="status-badge in-progress">🟡 In Progress</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Garage Liability / Any Auto</span>
+                        <span class="status-badge in-progress">🟡 In Progress</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">CPA Financial Statement</span>
+                        <span class="status-badge in-progress">🟡 In Progress</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Ownership Worksheet</span>
+                        <span class="status-badge pending">🔴 Not Started</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Garage Service Agreement</span>
+                        <span class="status-badge pending">🔴 Not Started</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Signage + Facility Photos</span>
+                        <span class="status-badge in-progress">🟡 In Progress</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Utilities / Building Readiness</span>
+                        <span class="status-badge in-progress">🟡 In Progress</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Salesperson License</span>
+                        <span class="status-badge pending">🔴 Not Started</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">CORE Dealer Application</span>
+                        <span class="status-badge pending">🔴 Not Started</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">State Inspection</span>
+                        <span class="status-badge pending">🔴 Not Started</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Floorplan Financing</span>
+                        <span class="status-badge in-progress">🟡 In Progress</span>
+                    </div>
+                </div>
+
+                <div class="progress-container">
+                    <h3>Overall Progress</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <p><strong>3 of 15 items complete (20%)</strong></p>
+                </div>
+            </section>
+
+            <!-- Mission Section -->
+            <section id="mission">
+                <h2>🎯 Current Mission</h2>
+                
+                <div class="mission-list">
+                    <div class="mission-item">
+                        <div class="mission-number">1</div>
+                        <div class="mission-content">
+                            <h4>Finish bond + dealer insurance</h4>
+                            <p>Complete $50,000 dealer bond and garage liability/any auto insurance</p>
+                            <span class="priority-badge high">HIGH PRIORITY</span>
+                        </div>
+                    </div>
+                    <div class="mission-item">
+                        <div class="mission-number">2</div>
+                        <div class="mission-content">
+                            <h4>Finish CPA financial statement</h4>
+                            <p>Complete financial documentation required for dealer license</p>
+                            <span class="priority-badge high">HIGH PRIORITY</span>
+                        </div>
+                    </div>
+                    <div class="mission-item">
+                        <div class="mission-number">3</div>
+                        <div class="mission-content">
+                            <h4>Complete Ownership Worksheet</h4>
+                            <p>Fill out and submit ownership documentation</p>
+                            <span class="priority-badge high">HIGH PRIORITY</span>
+                        </div>
+                    </div>
+                    <div class="mission-item">
+                        <div class="mission-number">4</div>
+                        <div class="mission-content">
+                            <h4>Get Garage Service Agreement signed</h4>
+                            <p>Execute garage service agreement with all parties</p>
+                        </div>
+                    </div>
+                    <div class="mission-item">
+                        <div class="mission-number">5</div>
+                        <div class="mission-content">
+                            <h4>Finish facility, sign, utilities, and inspection photos</h4>
+                            <p>Complete facility readiness and capture required documentation</p>
+                        </div>
+                    </div>
+                    <div class="mission-item">
+                        <div class="mission-number">6</div>
+                        <div class="mission-content">
+                            <h4>Submit CORE dealer application</h4>
+                            <p>Complete and submit official dealer application</p>
+                        </div>
+                    </div>
+                    <div class="mission-item">
+                        <div class="mission-number">7</div>
+                        <div class="mission-content">
+                            <h4>Pass state inspection</h4>
+                            <p>Complete state inspection of facility and operations</p>
+                        </div>
+                    </div>
+                    <div class="mission-item">
+                        <div class="mission-number">8</div>
+                        <div class="mission-content">
+                            <h4>Activate inventory financing and open</h4>
+                            <p>Finalize financing arrangements and launch operations</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Operations Section -->
+            <section id="operations">
+                <h2>🧭 Operations Map</h2>
+                
+                <div class="operations-grid">
+                    <div class="ops-category">
+                        <h3>📋 Licensing & Opening</h3>
+                        <div class="ops-links">
+                            <a href="docs/dealer-license-checklist.md" class="ops-link">
+                                <span class="ops-icon">📄</span>
+                                <span>Dealer License Checklist</span>
+                            </a>
+                            <a href="docs/facility-readiness.md" class="ops-link">
+                                <span class="ops-icon">🏢</span>
+                                <span>Facility Readiness</span>
+                            </a>
+                            <a href="docs/opening-checklist.md" class="ops-link">
+                                <span class="ops-icon">✓</span>
+                                <span>Opening Checklist</span>
+                            </a>
+                            <a href="docs/garage-service-agreement.md" class="ops-link">
+                                <span class="ops-icon">📝</span>
+                                <span>Garage Service Agreement</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ops-category">
+                        <h3>🚗 Inventory & Sales</h3>
+                        <div class="ops-links">
+                            <a href="docs/vehicle-acquisition-checklist.md" class="ops-link">
+                                <span class="ops-icon">🛒</span>
+                                <span>Vehicle Acquisition</span>
+                            </a>
+                            <a href="docs/recon-checklist.md" class="ops-link">
+                                <span class="ops-icon">🔧</span>
+                                <span>Recon Checklist</span>
+                            </a>
+                            <a href="docs/deal-jacket-checklist.md" class="ops-link">
+                                <span class="ops-icon">📊</span>
+                                <span>Deal Jacket</span>
+                            </a>
+                            <a href="templates/inventory-unit.md" class="ops-link">
+                                <span class="ops-icon">📑</span>
+                                <span>Inventory Template</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ops-category">
+                        <h3>💰 Money & Vendors</h3>
+                        <div class="ops-links">
+                            <a href="docs/floorplan-tracker.md" class="ops-link">
+                                <span class="ops-icon">💳</span>
+                                <span>Floorplan Tracker</span>
+                            </a>
+                            <a href="docs/vendor-directory.md" class="ops-link">
+                                <span class="ops-icon">📞</span>
+                                <span>Vendor Directory</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>⚙️ Operations Command Center | Lifetime Exotics LLC</p>
+            <p style="font-size: 0.9em; margin-top: 0.5rem; opacity: 0.8;">Last updated: Sept 15, 2026</p>
+        </footer>
+    </div>
+
+    <script>
+        document.querySelectorAll('.nav-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('section').forEach(section => section.classList.remove('active'));
+                
+                e.target.classList.add('active');
+                const sectionId = e.target.dataset.section;
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
